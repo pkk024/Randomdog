@@ -1,28 +1,22 @@
-const select=document.querySelectorAll('select');
-const input=document.querySelectorAll('input');
-const API_URL="http://api.exchangeratesapi.io/v1/latest?access_key=625343441eef71e871589c9692cea138"
-let html='';
-async function currency(){
-    const res=await fetch(API_URL);
-    const data=await res.json();
-    const arrKeys=Object.keys(data.rates);
-    const rates=data.rates;
-    arrKeys.map(item =>{
-        return html += `<option value=${item}>${item}</option>`;
+function get_random_dog_image(){
 
+    url = "https://dog.ceo/api/breeds/image/random";
+  
+    fetch(url)
+    .then(function(response){
+      return response.json();
     })
-    for(let i=0;i<select.length;i++)
-    {
-        select[i].innerHTML=html;
-    };
-
-    function convert(i,j)
-    {
-        input[i].value=input[j].value*rates[select[i].value]/rates[select[j].value]
-    }
-    input[0].addEventListener('keyup',()=>convert(1,0));
-    input[1].addEventListener('keyup',()=>convert(0,1));
-    select[0].addEventListener('change',()=>convert(1,0));
-    select[1].addEventListener('change',()=>convert(0,1));
-}
-currency();
+    .then(function(data){
+      display_image(data.message);
+    })
+    .catch(function(error){
+      console.log("Error: " + error);
+    });
+  
+  
+  }
+  
+  function display_image(image_url){
+    document.getElementById("image").src = image_url;
+  }
+  
